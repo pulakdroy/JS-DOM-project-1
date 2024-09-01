@@ -8,7 +8,7 @@ function loadMilestones() {
     const milestones = document.querySelector('.milestones');
 
     milestones.innerHTML = `${milestoneData.map(function (milestone) {
-        return `<div class="milestone border-b">
+        return `<div class="milestone border-b" id="${milestone._id}">
         <div class="flex">
             <div class="checkbox"><input type="checkbox" /></div>
             <div>
