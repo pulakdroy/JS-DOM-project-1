@@ -1,6 +1,21 @@
 const milestoneData = JSON.parse(data).data;
 
+function sortList(list) {
+    const items = Array.from(list.children);
+    items.sort((a, b) => {
+        const tempA = a.querySelector('p').innerText.toUpperCase();
+        const tempB = b.querySelector('p').innerText.toUpperCase();
+        
+        const numA = tempA.match(/\d+/) ? parseInt(tempA.match(/\d+/)[0], 10) : tempA;
+        const numB = tempB.match(/\d+/) ? parseInt(tempB.match(/\d+/)[0], 10) : tempB;
 
+        if (numA < numB) return -1;
+        if (numA > numB) return 1;
+        return tempA.localeCompare(tempB);
+    });
+
+    items.forEach(item => list.appendChild(item));
+}
 
 //load course data 
 
@@ -29,6 +44,8 @@ function loadMilestones() {
     </div>`;
     })
     .join("")}`;
+
+    sortList(milestones);
 }
 
 
@@ -82,11 +99,17 @@ function markMileStone(checkbox, id) {
         //mark as done
         milestonesList.removeChild(item);
         doneList.appendChild(item);
+        sortList(doneList);
     } else{
         //back to main list
-        milestonesList.appendChild(item);
         doneList.removeChild(item);
+        milestonesList.appendChild(item);
+        sortList(milestonesList);
     }
 }
+
+
+
+
 
 loadMilestones();
